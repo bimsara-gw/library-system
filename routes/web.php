@@ -25,20 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // BOOK ROUTES (LIVEWIRE CRUD)
+
     Route::prefix('books')->group(function () {
 
-        Route::get('/', BookIndex::class)
-            ->name('books.index');
-
-        Route::get('/create', BookCreate::class)
-            ->name('books.create');
-
-        Route::get('/edit/{id}', BookEdit::class)
-            ->name('books.edit');
-
-        Route::get('/show/{id}', BookShow::class)
-            ->name('books.show');
+        Route::get('/', BookIndex::class)->name('books.index');
+        Route::get('/create', BookCreate::class)->name('books.create');
+        Route::get('/edit/{id}', BookEdit::class)->name('books.edit');
+        Route::get('/show/{id}', BookShow::class)->name('books.show');
 
     });
 

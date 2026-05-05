@@ -5,6 +5,7 @@ namespace App\Livewire\Book;
 use Livewire\Component;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class Create extends Component
 {
@@ -27,7 +28,6 @@ class Create extends Component
         'category_id' => 'required|exists:categories,id',
     ];
 
-    // 🔥 live validation (optional but powerful)
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -49,6 +49,7 @@ class Create extends Component
             'total_copies' => $this->total_copies,
             'publisher' => $this->publisher,
             'category_id' => $this->category_id,
+            'created_by' => Auth::id(),
         ]);
 
         session()->flash('success', 'Book created successfully');

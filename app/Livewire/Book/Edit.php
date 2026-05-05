@@ -9,7 +9,6 @@ use App\Models\Category;
 class Edit extends Component
 {
     public $bookId;
-
     public $title, $author, $isbn, $description,
            $published_date, $pages, $price,
            $available_copies, $total_copies,
@@ -19,29 +18,35 @@ class Edit extends Component
     {
         $book = Book::findOrFail($id);
 
-        if ($book->trashed()) {
-            abort(404);
-        }
-
         $this->bookId = $book->id;
-
-        $this->fill($book->toArray());
+        $this->title = $book->title;
+        $this->author = $book->author;
+        $this->isbn = $book->isbn;
+        $this->description = $book->description;
+        $this->published_date = $book->published_date;
+        $this->pages = $book->pages;
+        $this->price = $book->price;
+        $this->available_copies = $book->available_copies;
+        $this->total_copies = $book->total_copies;
+        $this->publisher = $book->publisher;
+        $this->category_id = $book->category_id;
     }
 
     public function update()
     {
-        $book = Book::findOrFail($this->bookId);
-
         $this->validate([
             'title' => 'required',
             'author' => 'required',
-            'published_date' => 'before_or_equal:today',
-            'pages' => 'integer|min:1',
+            'isbn' => 'required',
+            'category_id' => 'required',
         ]);
+
+        $book = Book::findOrFail($this->bookId);
 
         $book->update([
             'title' => $this->title,
             'author' => $this->author,
+            'isbn' => $this->isbn,
             'description' => $this->description,
             'published_date' => $this->published_date,
             'pages' => $this->pages,
@@ -52,8 +57,13 @@ class Edit extends Component
             'category_id' => $this->category_id,
         ]);
 
-        session()->flash('success','Book updated');
+        session()->flash('success', 'Book updated successfully');
 
+        return redirect()->route('books.index');
+    }
+
+    public function cancel()
+    {
         return redirect()->route('books.index');
     }
 
