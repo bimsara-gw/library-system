@@ -10,8 +10,9 @@
 
             <!-- TITLE -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Title <span class="text-red-500">*</span></label>
                 <input wire:model="title"
-                       placeholder="Title"
+                       placeholder="Enter book title"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('title') border-red-500 focus:ring-red-400 @enderror">
 
@@ -22,8 +23,9 @@
 
             <!-- AUTHOR -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Author <span class="text-red-500">*</span></label>
                 <input wire:model="author"
-                       placeholder="Author"
+                       placeholder="Author name"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('author') border-red-500 focus:ring-red-400 @enderror">
 
@@ -34,8 +36,9 @@
 
             <!-- ISBN -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">ISBN <span class="text-red-500">*</span></label>
                 <input wire:model="isbn"
-                       placeholder="ISBN"
+                       placeholder="e.g. 1234567890 or 1234567890123"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('isbn') border-red-500 focus:ring-red-400 @enderror">
 
@@ -46,6 +49,7 @@
 
             <!-- DATE -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Published Date <span class="text-red-500">*</span></label>
                 <input wire:model="published_date"
                        type="date"
                        class="w-full border p-3 rounded-lg outline-none
@@ -58,9 +62,10 @@
 
             <!-- PAGES -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Pages <span class="text-red-500">*</span></label>
                 <input wire:model="pages"
                        type="number"
-                       placeholder="Pages"
+                       placeholder="e.g. 350"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('pages') border-red-500 focus:ring-red-400 @enderror">
 
@@ -71,9 +76,11 @@
 
             <!-- PRICE -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Price <span class="text-red-500">*</span></label>
                 <input wire:model="price"
                        type="number"
-                       placeholder="Price"
+                       step="0.01"
+                       placeholder="e.g. 19.99"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('price') border-red-500 focus:ring-red-400 @enderror">
 
@@ -84,9 +91,10 @@
 
             <!-- AVAILABLE -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Available Copies <span class="text-red-500">*</span></label>
                 <input wire:model="available_copies"
                        type="number"
-                       placeholder="Available Copies"
+                       placeholder="0"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('available_copies') border-red-500 focus:ring-red-400 @enderror">
 
@@ -97,9 +105,10 @@
 
             <!-- TOTAL -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Total Copies <span class="text-red-500">*</span></label>
                 <input wire:model="total_copies"
                        type="number"
-                       placeholder="Total Copies"
+                       placeholder="0"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('total_copies') border-red-500 focus:ring-red-400 @enderror">
 
@@ -110,8 +119,9 @@
 
             <!-- PUBLISHER -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Publisher</label>
                 <input wire:model="publisher"
-                       placeholder="Publisher"
+                       placeholder="Publisher name"
                        class="w-full border p-3 rounded-lg outline-none
                        @error('publisher') border-red-500 focus:ring-red-400 @enderror">
 
@@ -122,6 +132,7 @@
 
             <!-- CATEGORY -->
             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Category <span class="text-red-500">*</span></label>
                 <select wire:model="category_id"
                         class="w-full border p-3 rounded-lg outline-none
                         @error('category_id') border-red-500 focus:ring-red-400 @enderror">
@@ -141,8 +152,9 @@
 
             <!-- DESCRIPTION -->
             <div class="md:col-span-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
                 <textarea wire:model="description"
-                          placeholder="Description"
+                          placeholder="Book description..."
                           class="w-full border p-3 rounded-lg h-28 outline-none
                           @error('description') border-red-500 focus:ring-red-400 @enderror"></textarea>
 

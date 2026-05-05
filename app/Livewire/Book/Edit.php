@@ -16,7 +16,11 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::withTrashed()->findOrFail($id);
+
+        if ($book->trashed()) {
+            abort(403, 'Cannot edit a deleted book.');
+        }
 
         $this->bookId = $book->id;
         $this->title = $book->title;
@@ -35,10 +39,16 @@ class Edit extends Component
     public function update()
     {
         $this->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'isbn' => 'required',
-            'category_id' => 'required',
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'published_date' => 'required|date|before_or_equal:today',
+            'pages' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'available_copies' => 'required|integer|min:0',
+            'total_copies' => 'required|integer|min:0',
+            'publisher' => 'nullable|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $book = Book::findOrFail($this->bookId);
@@ -46,7 +56,6 @@ class Edit extends Component
         $book->update([
             'title' => $this->title,
             'author' => $this->author,
-            'isbn' => $this->isbn,
             'description' => $this->description,
             'published_date' => $this->published_date,
             'pages' => $this->pages,

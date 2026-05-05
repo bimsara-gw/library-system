@@ -2,7 +2,7 @@
 
 <div class="p-6">
 
-    <h2 class="text-2xl font-bold mb-6">📊 Library Dashboard</h2>
+    <h2 class="text-2xl text-white font-bold mb-6 ">📊 Library Dashboard</h2>
 
     <div class="grid grid-cols-4 gap-4">
 

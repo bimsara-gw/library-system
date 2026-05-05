@@ -5,7 +5,6 @@ namespace App\Livewire\Book;
 use Livewire\Component;
 use App\Models\Book;
 use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
 
 class Create extends Component
 {
@@ -49,7 +48,6 @@ class Create extends Component
             'total_copies' => $this->total_copies,
             'publisher' => $this->publisher,
             'category_id' => $this->category_id,
-            'created_by' => Auth::id(),
         ]);
 
         session()->flash('success', 'Book created successfully');

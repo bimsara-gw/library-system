@@ -11,10 +11,10 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $search, $author, $category, $availability;
+    public $search, $author, $category, $availability, $trashedFilter = 'active';
 
     protected $updatesQueryString = [
-        'search','author','category','availability'
+        'search','author','category','availability','trashedFilter'
     ];
 
     public function delete($id)
@@ -35,6 +35,8 @@ class Index extends Component
     public function render()
     {
         $books = Book::with(['category','creator'])
+            ->when($this->trashedFilter === 'deleted', fn($q) => $q->onlyTrashed())
+            ->when($this->trashedFilter === 'all', fn($q) => $q->withTrashed())
             ->when($this->search, fn($q) =>
                 $q->where('title','like',"%{$this->search}%")
             )

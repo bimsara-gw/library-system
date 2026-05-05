@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class Book extends Model
 {
@@ -28,6 +29,26 @@ class Book extends Model
         'updated_by',
         'deleted_by',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($book) {
+            $book->created_by = Auth::id();
+        });
+
+        static::updating(function ($book) {
+            $book->updated_by = Auth::id();
+        });
+
+        static::deleting(function ($book) {
+            if (in_array(SoftDeletes::class, class_uses_recursive($book))) {
+                if (!$book->isForceDeleting()) {
+                    $book->deleted_by = Auth::id();
+                    $book->save();
+                }
+            }
+        });
+    }
 
     // Category
     public function category()

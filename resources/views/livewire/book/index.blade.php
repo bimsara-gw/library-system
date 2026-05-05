@@ -16,7 +16,7 @@
     </div>
 
     <!-- FILTER BAR -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
 
         <input type="text"
                wire:model.live="search"
@@ -48,6 +48,13 @@
 
         </select>
 
+        <select wire:model.live="trashedFilter"
+                class="p-2 border rounded-lg shadow-sm">
+            <option value="active">🟢 Active Only</option>
+            <option value="all">⚪ Show All</option>
+            <option value="deleted">🔴 Deleted Only</option>
+        </select>
+
     </div>
 
     <!-- TABLE -->
@@ -71,7 +78,7 @@
             <tbody>
 
                 @foreach($books as $book)
-                    <tr class="border-b hover:bg-gray-50">
+                    <tr class="border-b hover:bg-gray-50 {{ $book->trashed() ? 'bg-red-50 text-gray-500' : '' }}">
 
                         <td class="p-3">{{ $book->id }}</td>
 
@@ -110,22 +117,32 @@
 
                         <!-- ACTIONS -->
                         <td class="p-3 flex gap-2">
+                            @if($book->trashed())
+                                <button wire:click="restore({{ $book->id }})"
+                                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                                    Restore
+                                </button>
+                                <button wire:click="forceDelete({{ $book->id }})"
+                                        wire:confirm="Are you sure you want to permanently delete this book?"
+                                        class="bg-red-700 hover:bg-red-800 text-white px-3 py-1 rounded">
+                                    Force Delete
+                                </button>
+                            @else
+                                <a href="{{ route('books.show', $book->id) }}"
+                                   class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+                                    View
+                                </a>
 
-                            <a href="{{ route('books.show', $book->id) }}"
-                               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                                View
-                            </a>
+                                <a href="{{ route('books.edit', $book->id) }}"
+                                   class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                                    Edit
+                                </a>
 
-                            <a href="{{ route('books.edit', $book->id) }}"
-                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
-                                Edit
-                            </a>
-
-                            <button wire:click="delete({{ $book->id }})"
-                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                                Delete
-                            </button>
-
+                                <button wire:click="delete({{ $book->id }})"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                    Delete
+                                </button>
+                            @endif
                         </td>
 
                     </tr>
